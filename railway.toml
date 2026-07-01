@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+watchPatterns = ["app/**", "tests/**", "pyproject.toml", "Dockerfile", ".env.example"]
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
