@@ -24,7 +24,7 @@ click==8.3.3
     # via uvicorn
 coverage==7.13.5
     # via pytest-cov
-distlib==0.4.0
+distlib==0.4.3
     # via virtualenv
 fastapi==0.136.1
     # via supportdesk-api (pyproject.toml)
