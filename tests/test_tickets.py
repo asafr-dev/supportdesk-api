@@ -24,6 +24,12 @@ def test_filter_by_status(client):
     assert all(t["status"] == "open" for t in r.json())
 
 
+def test_search_matches_ticket_descriptions(client):
+    r = client.get("/tickets?q=CSV")
+    assert r.status_code == 200
+    assert any("CSV export" in t["description"] for t in r.json())
+
+
 def test_get_ticket(client):
     r = client.get("/tickets")
     tid = r.json()[0]["id"]
