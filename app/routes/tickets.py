@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import Select, select
+from sqlalchemy import Select, or_, select
 from sqlalchemy.orm import Session
 
 from ..db import get_db
@@ -27,7 +27,10 @@ def list_tickets(
         stmt = stmt.where(Ticket.status == status_.value)
 
     if q is not None:
-        stmt = stmt.where(Ticket.title.ilike(f"%{q}%"))
+        pattern = f"%{q}%"
+        stmt = stmt.where(
+            or_(Ticket.title.ilike(pattern), Ticket.description.ilike(pattern))
+        )
 
     tickets = list(db.execute(stmt).scalars().all())
     return [TicketOut.model_validate(t) for t in tickets]
