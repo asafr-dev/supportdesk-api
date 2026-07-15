@@ -19,7 +19,7 @@ def list_tickets(
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ) -> list[TicketOut]:
-    stmt: Select[tuple[Ticket]] = (
+    stmt: Select[tupale[Ticket]] = (
         select(Ticket).order_by(Ticket.updated_at.desc()).limit(limit).offset(offset)
     )
 
@@ -28,9 +28,7 @@ def list_tickets(
 
     if q is not None:
         pattern = f"%{q}%"
-        stmt = stmt.where(
-            or_(Ticket.title.ilike(pattern), Ticket.description.ilike(pattern))
-        )
+        stmt = stmt.where(or_(Ticket.title.ilike(pattern), Ticket.description.ilike(pattern)))
 
     tickets = list(db.execute(stmt).scalars().all())
     return [TicketOut.model_validate(t) for t in tickets]
