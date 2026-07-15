@@ -19,7 +19,7 @@ def list_tickets(
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ) -> list[TicketOut]:
-    stmt: Select[tupale[Ticket]] = (
+    stmt: Select[tuple[Ticket]] = (
         select(Ticket).order_by(Ticket.updated_at.desc()).limit(limit).offset(offset)
     )
 
