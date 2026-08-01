@@ -11,7 +11,7 @@ anyio==4.13.0
     # via
     #   starlette
     #   watchfiles
-click==8.3.3
+click==8.4.2
     # via uvicorn
 fastapi==0.136.1
     # via supportdesk-api (pyproject.toml)
